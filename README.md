@@ -1,1 +1,1 @@
-# System mikrousług z aplikacją webową używająca .NET Framework dla e-medycyny.
+# System mikrousług z aplikacją webową używającą .NET Framework dla e-medycyny.
