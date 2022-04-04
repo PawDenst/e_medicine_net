@@ -1,0 +1,37 @@
+﻿@page "/drugs"
+@inject IController controller
+@inject IModel model
+
+<h5>Enter patient ID:</h5>
+
+<RadzenTextBox Name="searchDrugsPatientId" @bind-Value=@model.SearchDrugsPatientId Style="width: 160px" />
+
+<RadzenButton Icon="search" Text="Search" Click=@controller.ShowDrugsListAsync Style="width: 160px" />
+
+<h5 style="margin-top: 16px">Patient's favorite drugs:</h5>
+
+<RadzenListBox Name="drugs" Data=@model.DrugsList TValue="DrugData" Style="width: 324px; height: 240px">
+    <Template Context="drug">
+       @drug.Drug
+    </Template>
+</RadzenListBox>
+
+
+
+<div style="margin-top: 12px; width: 324px; text-align: center">
+    <RadzenLink Text="Welcome to our GitLab" Path="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO" Target="_blank" />
+</div>
+
+
+@code {
+    private IController controller_ = ControllerFactory.GetController(new EventDispatcher());
+
+    protected override async Task OnInitializedAsync()
+    {
+        IModel model1 = controller_.Model;
+
+        IModel model2 = controller.Model;
+
+        IModel model3 = model;
+    }
+}

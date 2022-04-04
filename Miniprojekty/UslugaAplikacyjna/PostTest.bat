@@ -1,0 +1,2 @@
+curl -X POST "https://localhost:44335/reserveVisit" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"doctorName\":\"Stefan\",\"doctorSurname\":\"Kowalczyk\",\"patientName\":\"Hubert\",\"patientSurname\":\"Rudecki\",\"visitDate\":\"22/10/2021\",\"roomNumber\":\"14\"}"
+pause

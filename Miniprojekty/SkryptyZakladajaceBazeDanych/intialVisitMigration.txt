@@ -1,0 +1,40 @@
+BEGIN TRANSACTION;
+GO
+CREATE TABLE [Doctors] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    [Surname] nvarchar(max) NULL,
+    CONSTRAINT [PK_Doctors] PRIMARY KEY ([Id])
+);
+GO
+
+CREATE TABLE [Patients] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    [Surname] nvarchar(max) NULL, 
+    CONSTRAINT [PK_Patients] PRIMARY KEY ([Id])
+);
+GO
+CREATE TABLE [Visits] (
+    [Id] int NOT NULL IDENTITY,
+    [VisitDate] nvarchar(max) NULL,
+    [RoomNumber] nvarchar(max) NULL,
+    [DoctorId] int NOT NULL,
+    [PatientId] int NOT NULL,
+    CONSTRAINT [PK_Visits] PRIMARY KEY ([Id]),
+    CONSTRAINT FK_DoctorsVisits FOREIGN KEY (DoctorId)
+    REFERENCES Doctors(Id),
+    CONSTRAINT FK_PatientsVisits FOREIGN KEY (PatientId)
+    REFERENCES Patients(Id)
+);
+GO
+
+
+
+
+
+
+
+COMMIT;
+GO
+

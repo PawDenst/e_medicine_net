@@ -1,0 +1,2 @@
+curl -X POST "https://localhost:44386/addVisit" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"visitDate\":\"22/11/2021\",\"roomNumber\":\"11\",\"doctorName\":\"Jan\",\"doctorSurname\":\"Kowalski\",\"patientName\":\"Tomasz\",\"patientSurname\":\"Nowak\"}"
+pause

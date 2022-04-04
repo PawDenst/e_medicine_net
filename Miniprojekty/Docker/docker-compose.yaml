@@ -1,0 +1,90 @@
+version: "3.9"
+
+networks:
+  int_network:
+
+services:
+   database_hospital:
+    image: melekus/hospitapp:database_hospital_latest
+    ports:
+      - 5434:1433
+    networks:
+      - int_network
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Password
+   microservice_visits:
+    image: melekus/hospitapp:Microservice_Visits_latest
+    ports:
+      - published: 8081
+        target: 80
+      - published: 44301
+        target: 443
+    networks:
+      - int_network
+    environment:
+       - databaseconnection=Server=database_hospital;Database=projekt;User=sa;Password=Password;
+    deploy:
+      replicas: 1
+    depends_on:
+      - database_hospital
+    links:
+      - database_hospital
+   microservice_prescriptions:
+    image: melekus/hospitapp:Microservice_Prescriptions_latest
+    ports:
+      - published: 8082
+        target: 80
+      - published: 44302
+        target: 443
+    networks:
+      - int_network
+    environment:
+      - databaseconnection=Server=database_hospital;Database=projekt;User=sa;Password=Password;
+    deploy:
+      replicas: 1
+    depends_on:
+      - database_hospital
+    links:
+      - database_hospital
+   microservice_patient:
+    image: melekus/hospitapp:Microservice_Patient_latest
+    ports:
+      - published: 8083
+        target: 80
+      - published: 44303
+        target: 443
+    networks:
+      - int_network
+    environment:
+       - Visitsaddr= http://microservice_visits
+       - Prescriptionaddr= http://microservice_prescriptions
+    deploy:
+      replicas: 1
+    depends_on:
+      - microservice_prescriptions
+      - microservice_visits
+    links:
+      - microservice_prescriptions
+      - microservice_visits
+   microservice_doctor:
+    image: melekus/hospitapp:Microservice_Doctor_latest
+    ports:
+      - published: 8084
+        target: 80
+      - published: 44304
+        target: 443
+    networks:
+      - int_network
+    environment:
+       - Visitsaddr= http://microservice_visits
+       - Prescriptionaddr= http://microservice_prescriptions  
+    deploy:
+      replicas: 1
+    depends_on:
+      - microservice_prescriptions
+      - microservice_visits
+    links:
+      - microservice_prescriptions
+      - microservice_visits
+

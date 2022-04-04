@@ -1,0 +1,47 @@
+version: "3.9"
+
+networks:
+  int_network:
+
+
+services:
+  data_examinationrooms:
+    image: pawelqq1/paim_lab_examinationrooms:ExaminationRooms_latest
+    ports:
+      - published: 8080
+        target: 80
+      - published: 44300
+        target: 443
+    networks:
+      - int_network
+    deploy:
+      replicas: 1
+  data_doctors:
+    image: pawelqq1/paim_lab_doctors:Doctors_latest
+    ports:
+      - 8082:80
+      - 44302:443
+      - 44303:44348
+    networks:
+      - int_network
+    deploy:
+      replicas: 1
+  app_examinationroomsselector:
+    image: pawelqq1/paim_lab_examinationroomsselector:ExaminationRoomsSelector_latest
+    ports:
+       - 8081:80
+       - 44301:443
+    networks:
+       - int_network
+    environment:
+        - doctoraddres= http://data_doctors
+        - roomaddres= http://data_examinationrooms
+    deploy:
+        replicas: 1
+    links:
+    - data_doctors
+    - data_examinationrooms
+    depends_on:
+    - data_doctors
+    - data_examinationrooms
+  
