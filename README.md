@@ -1,1 +1,1 @@
-Paweł Denst 303927, Marcin Ruta 303952
+System mikrousług z aplikacją webową używająca .NET Framework dla e-medycyny.
